@@ -1,7 +1,20 @@
-FROM node:14.21.2-alpine
+# Use the official Node.js LTS image as base
+FROM node:lts-alpine
+
+# Set working directory for the application
 WORKDIR /app
-ENV PORT 3000
-COPY . .
+
+# Copy package.json and package-lock.json (if present)
+COPY package*.json ./
+
+# Install dependencies
 RUN npm install
+
+# Copy the entire application code
+COPY . .
+
+# Expose port 3000 for container communication
 EXPOSE 3000
-CMD [ "npm", "run", "start"]
+
+# Start the application using the default start script (usually defined in package.json)
+CMD [ "npm", "run", "start" ]
